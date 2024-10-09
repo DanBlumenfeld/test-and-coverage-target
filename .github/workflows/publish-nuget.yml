@@ -15,11 +15,31 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
+      with:
+        fetch-depth: 0  # Ensure full history is fetched to get Git tags
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: '8.0.x'
+
+    - name: Get the current Git tag
+      id: get_tag
+      run: |
+        # Try to get the latest Git tag
+        TAG=$(git describe --tags --abbrev=0 || echo "")
+        if [ -z "$TAG" ]; then
+          # No tag found, fallback to commit SHA (short)
+          TAG="0.1.0-$(git rev-parse --short HEAD)"
+        fi
+        echo "Using version $TAG"
+        echo "##[set-output name=VERSION;]$TAG"
+      
+    - name: Update version in .csproj
+      run: |
+          TAG=$(git describe --tags --abbrev=0 || echo "v0.1.0")
+          sed -i "s/<Version>.*<\/Version>/<Version>${TAG#v}<\/Version>/" ./src/TestAndCoverageTarget/TestAndCoverageTarget.csproj
+  
         
     - name: Restore dependencies
       run: dotnet restore ./src/TestAndCoverageTarget/TestAndCoverageTarget.csproj
