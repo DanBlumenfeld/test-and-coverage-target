@@ -26,6 +26,6 @@ jobs:
       run: dotnet pack ./src/TestAndCoverageTarget/TestAndCoverageTarget.csproj --configuration Release
 
     - name: Publish to GitHub Packages
-      run: dotnet nuget push ./src/TestAndCoverageTarget/nupkg/*.nupkg --api-key ${{ secrets.GITHUB_TOKEN }} --source https://nuget.pkg.github.com/DanBlumenfeld/index.json
+      run: dotnet nuget push ./src/TestAndCoverageTarget/nupkg/*.nupkg --api-key ${GITHUB_TOKEN} --source https://nuget.pkg.github.com/DanBlumenfeld/index.json
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
