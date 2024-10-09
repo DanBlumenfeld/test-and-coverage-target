@@ -7,10 +7,11 @@
     <Description>A reusable MSBuild target for generating code coverage reports.</Description>
     <PackageOutputPath>./nupkg</PackageOutputPath>
     <RepositoryUrl>https://github.com/DanBlumenfeld/test-and-coverage-target</RepositoryUrl>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
   </PropertyGroup>
 
-  <!-- Include the MSBuild targets file in the build directory of the package -->
   <ItemGroup>
-    <None Include="build/TestAndCoverage.targets" Pack="true" PackagePath="build/" />
+    <None Include="build/TestAndCoverageTarget.targets" Pack="true" PackagePath="build/" />
+    <None Include="docs\readme.md" Pack="true" PackagePath="\"/>
   </ItemGroup>
 </Project>
