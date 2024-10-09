@@ -1,0 +1,29 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <!-- Automatically include the coverlet.collector package -->
+    <PackageReference Include="coverlet.collector" Version="3.1.2" />
+  </ItemGroup>
+
+  <Target Name="TestAndCoverageReport">
+    <!-- Clean the TestResults and CoverageReport directories before running tests -->
+    <RemoveDir Directories="$(ProjectDir)TestResults" ContinueOnError="true" />
+    <MakeDir Directories="$(ProjectDir)TestResults" />
+    
+    <RemoveDir Directories="$(ProjectDir)CoverageReport" ContinueOnError="true" />
+    <MakeDir Directories="$(ProjectDir)CoverageReport" />
+    
+    <!-- Run tests and generate code coverage -->
+    <Exec Command='dotnet test --collect:"XPlat Code Coverage" --results-directory "$(ProjectDir)TestResults" /p:CoverletOutput="$(ProjectDir)TestResults/coverage" /p:CoverletOutputFormat=cobertura' />
+    
+    <!-- Find the coverage file dynamically -->
+    <ItemGroup>
+        <CoverageFile Include="$(ProjectDir)TestResults\**\coverage.cobertura.xml" />
+    </ItemGroup>
+
+    <!-- Log the coverage file found -->
+    <Message Text="Found coverage file at: @(CoverageFile)" Importance="high" />
+    
+    <!-- Generate HTML report from the Cobertura coverage file -->
+    <Exec Command="reportgenerator -reports:@(CoverageFile) -targetdir:$(ProjectDir)CoverageReport -reporttypes:Html" />
+  </Target>
+</Project>

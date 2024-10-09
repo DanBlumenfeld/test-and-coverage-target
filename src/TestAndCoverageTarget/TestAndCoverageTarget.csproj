@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <PackageId>TestAndCoverageTarget</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>Dan Blumenfeld</Authors>
+    <Description>A reusable MSBuild target for generating code coverage reports.</Description>
+    <PackageOutputPath>./nupkg</PackageOutputPath>
+    <RepositoryUrl>https://github.com/DanBlumenfeld/test-and-coverage-target</RepositoryUrl>
+  </PropertyGroup>
+
+  <!-- Include the MSBuild targets file in the build directory of the package -->
+  <ItemGroup>
+    <None Include="build/TestAndCoverage.targets" Pack="true" PackagePath="build/" />
+  </ItemGroup>
+</Project>
