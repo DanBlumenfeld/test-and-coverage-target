@@ -9,16 +9,11 @@ Mostly just a convenience so that those who use test-driven coverage reports in 
 This may vary depending on which IDE (if any) you choose to use, but should be sufficient to get you going.
 
 ## Add the package source
-Open the NuGet.Config file in your project or solution's root (or create it if it doesn't exist)
-Add the source as shown:
+If you don't already have a GitHub PAT, create one [here](https://github.com/settings/tokens) with minimal read:packages permissions to access public repositories.
+
+Run this:
 ```
-<?xml version="1.0" encoding="utf-8"?>
-<configuration>
-  <packageSources>
-    <!-- GitHub Packages as a public source -->
-    <add key="github" value="https://nuget.pkg.github.com/DanBlumenfeld/index.json" />
-  </packageSources>
-</configuration> 
+dotnet nuget add source "https://nuget.pkg.github.com/DanBlumenfeld/index.json" --name "Github Feed - DanBlumenfeld" --username "[github username]" --password "[PAT]"
 ```
 
 ## Add a reference to the package in each test project
@@ -31,12 +26,10 @@ Modify your .csproj as shown:
   </PropertyGroup>
 
   <ItemGroup>
-    <!-- Reference the custom GitHub package -->
     <PackageReference Include="TestAndCoverageTarget" Version="1.0.0" />
   </ItemGroup>
 </Project>
 ```
-NOTE: be sure to choose your desired version
 
 ## Restore the package
 `dotnet restore`
@@ -64,4 +57,7 @@ In `launchsettings.json`:
   }
 }
 ```
+
+## Review the coverage report
+Found at {ProjectDir}/CoverageReport/index.html
 
