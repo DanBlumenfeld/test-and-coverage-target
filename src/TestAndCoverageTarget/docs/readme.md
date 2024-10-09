@@ -6,5 +6,4 @@ Mostly just a convenience so that those who use test-driven coverage reports in 
 
 # How to use
 
-## TODO
-Set up target, set up launch profile
+See the [Github project README](https://github.com/DanBlumenfeld/test-and-coverage-target)
